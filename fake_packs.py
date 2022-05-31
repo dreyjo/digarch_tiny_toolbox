@@ -22,11 +22,11 @@ def make_fake_packages(coll=coll, dest=dest, start=start, end=end):
     media_range = ["%.4d" % i for i in range(start, (end+1))]
     for item in media_range:
         path = os.path.join(dest, coll)
+        m = f'{coll}_{item}'
         name = f'{coll}_{item}_bag'
-        mpath = os.path.join(path,name)
+        mpath = os.path.join(path,m,name)
         media.append(mpath)
         print(mpath)
-
 
     for item in media:
         for dir in subdirs:
