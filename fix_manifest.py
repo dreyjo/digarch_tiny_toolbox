@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import re
 import sys
 import os
@@ -8,7 +10,7 @@ def clean_manifest(textfile):
     delete = []
 
     #open file to read lines
-    i = open(textfile, "r")
+    i =open(textfile, "r")
     # with open(textfile, 'r') as input:
     lines = i.readlines()
     i.close()
@@ -18,6 +20,7 @@ def clean_manifest(textfile):
     for line in lines:
         if '._' not in line:
             i.write(line)
+    i.close()
 
 
 
