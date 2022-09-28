@@ -68,71 +68,42 @@ def compare_dirs(source_set, copy_set):
         # print(diff)
 
     #list of files and filesize in source dir but not in copied dir
-    #then create a faail csv with the filename and size
+    #i.e. files that didn't transfer over. 
     source_diff = []
+    #create a fail csv with the filename and size
     for item in diff['source_diff']:
         if len(diff['source_diff']) > 0:
-            source_diff.append(item)
-            with open('source_fails.csv','wb') as out:
-                csv_out=csv.writer(out)
-                # csv_out.writerow(['name','size'])
-                for row in source_diff:
-                    csv_out.writerow(row)
+            #testing
             # print(item)
+            source_diff.append(item)
+            with open('source_fails.csv','w') as out:
+                csv_out=csv.writer(out)
+                headers = ['filename', 'filesize']
+
+                for row in source_diff:
+                    csv_out.writerow(headers)
+                    csv_out.writerow(row)
+                    # testing
+                    # print(item)
 
     #list of files and filesize in copied dir but not in source dir
     copy_diff =[]
+    #create a fail csv with the filename and size
     for item in diff['copy_diff']:
         if len(diff['copy_diff']) > 0:
-            copy_diff.append(item)
-            with open('copy_fail.csv','wb') as out:
-                csv_out=csv.writer(out)
-                # csv_out.writerow(['name','size'])
-                for row in copy_diff:
-                    csv_out.writerow(row)
+            # testing
             # print(item)
+            copy_diff.append(item)
+            with open('copy_fail.csv','w') as out:
+                csv_out=csv.writer(out)
+                headers = ['filename', 'filesize']
+                    
+                for row in copy_diff:
+                    csv_out.writerow(headers)
+                    csv_out.writerow(row)
+                    # testing
+                    # print(item)
 
-    
-
-# #from here: main logic to copy is create a list of all file paths in directory,
-# Create tuple with file path, and file size
-# Add to a set (so it's unique)
-#
-#
-# def get_files_on_source(drive_path):
-#     drive_path = pathlib.Path(drive_path)
-#     root_files = drive_path.glob('*')
-#     audio_bag_files = drive_path.joinpath('Audio').glob('**/*')
-#     video_bag_files = drive_path.joinpath('Video').glob('**/*')
-#     film_bag_files = drive_path.joinpath('Film').glob('**/*')
-#     manifest = []
-#
-#     for file_list in [root_files, audio_bag_files, video_bag_files, film_bag_files]:
-#         for path in file_list:
-#             if path.is_file() and path.suffix != '.txt' and path.suffix != '.json':
-#                 manifest.append((str(path).replace(str(drive_path), ''), path.stat().st_size))
-#
-#     return set(manifest)
-#
-#
-# --------------------------------------
-# We can call this check_copy.py
-# Then compare sets between he original directory and the new directory
-#
-# def compare_source_snowball(
-#     source_set: set,
-#     snowball_set: set,
-# ):
-#
-#     if source_set == snowball_set:
-#         return None
-#     else:
-#         difference = {
-#             'source_diff': source_set - snowball_set,
-#             'snowball_diff': snowball_set - source_set
-#         }
-
-#
 def main():
     o = args().origdir
     c = args().copydir
@@ -140,9 +111,6 @@ def main():
     cdir = get_copy_files(c)
 
     compare_dirs(origs, cdir)
-
-
-
 
 if __name__ == '__main__':
     main()
