@@ -4,7 +4,6 @@ import argparse
 import os
 import csv
 import re
-import sys
 import json
 
 def args():
@@ -89,35 +88,21 @@ def make_json(file_list, ami_list, dest):
         for file in file_list:
             filename = file['filename']
             filepath = file['path']
-            nested_json = {
-                'asset': {
-                'referenceFilename': filename
-                },
-                'bibliographic':{
-                'primaryID':p,
-                'barcode':b
-            }
-            }
-            json_filename = os.path.splitext(filename)[0] + ".json"
-            json_filepath = os.path.join(dest, json_filename)
-            with open(json_filepath, 'w') as f:
-                json.dump(nested_json, f, indent = 4)
-
-
-#from Ben
-# for row in reader:
-#     for filepath in sorted(sync_list):
-#         filename = filepath.split('/')[-1]
-#         cmsID = filename.split('_')[1]
-#         if cmsID in row[0]:
-#             print(filename)
-#             nested_json = {'asset': {'referenceFilename': filename},
-#                         'bibliographic': {'primaryID': row[0],
-#                         'barcode': row[8]}}
-#             json_filename = os.path.splitext(filename)[0] + ".json"
-#             json_filepath = os.path.join(dest, json_filename)
-#             with open(json_filepath, 'w') as f:
-#                 json.dump(nested_json, f, indent = 4)
+            id = file['id']
+            if p == id:
+                nested_json = {
+                    'asset': {
+                    'referenceFilename': filename
+                    },
+                    'bibliographic':{
+                    'primaryID':p,
+                    'barcode':b
+                }
+                }
+                json_filename = os.path.splitext(filename)[0] + ".json"
+                json_filepath = os.path.join(dest, json_filename)
+                with open(json_filepath, 'w') as f:
+                    json.dump(nested_json, f, indent = 4)
 
 def main():
     report = args().csv
